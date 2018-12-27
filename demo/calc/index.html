@@ -15,7 +15,9 @@
             i;
 
         document.write('1億次累加運算開始 (1+2+3+4+...+1億)');
+        document.write('<br>');
         document.write('-----------------------------------');
+        document.write('<br>');
 
         while (max) {
 
@@ -26,7 +28,12 @@
 
             for (i; i <= 10; i++) {
 
-                if (i * 1e7 === times) document.write(`完成: ${i}0%，目前累計: ${temp}`);
+                if (i * 1e7 === times) {
+                    
+                    document.write(`完成: ${i}0%，目前累計: ${temp}`);
+                    document.write('<br>');
+
+                }
 
             };
 
@@ -35,7 +42,9 @@
         };
 
         document.write('-----------------------------------');
+        document.write('<br>');
         document.write('運算結束');
+        document.write('<br>');
     </script>
 </body>
 </html>
