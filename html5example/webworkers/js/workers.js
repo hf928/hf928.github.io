@@ -1,4 +1,4 @@
-﻿let max = 1e8,
+let max = 1e8,
     temp = 0,
     times = 0,
     i;

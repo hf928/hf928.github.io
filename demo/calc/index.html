@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1億次累加</title>
+</head>
+<body>
+    <h1>1億次累加</h1>
+    <script>
+        let max = 1e8,
+            temp = 0,
+            times = 0,
+            i;
+
+        document.write('1億次累加運算開始 (1+2+3+4+...+1億)');
+        document.write('-----------------------------------');
+
+        while (max) {
+
+            times = times + 1;
+            temp = temp + times;
+
+            i = 1;
+
+            for (i; i <= 10; i++) {
+
+                if (i * 1e7 === times) document.write(`完成: ${i}0%，目前累計: ${temp}`);
+
+            };
+
+            max = max - 1;
+
+        };
+
+        document.write('-----------------------------------');
+        document.write('運算結束');
+    </script>
+</body>
+</html>
