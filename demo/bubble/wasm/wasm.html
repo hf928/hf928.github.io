@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DEMO - WASM</title>
+</head>
+
+<body style="margin:0; overflow: hidden">
+    <canvas id="canvas" style="width: 100vw; height: 100vh; float: left;"></canvas>
+    <h1 style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; margin: 0;">WebAssembly</h1>
+    <button id="action" style="position: fixed; top: 10px; left: 10px;">RUN</button>
+    <script type="module">
+        import render from '../js/render.js';
+
+        // wasm
+        (function (fetchAndInstantiateWasm) {
+
+            fetchAndInstantiateWasm(
+                './wasm/demo.wasm',
+                {
+                    env: {
+                        randomf: Math.random,
+                        expf: Math.exp,
+                        consoleLog: console.log.bind(console)
+                    } 
+                }
+            )
+            .then((m) => {
+
+                const circleCount = m.getCircleCount();
+                const circleDataOffset = m.getCircleDataOffset();
+                const circleData = new Float32Array(m.memory.buffer, circleDataOffset, circleCount * 3);
+                
+                action.addEventListener('click', () => render(canvas, circleData, circleCount, m.init, m.timeStep));
+
+            });
+
+        }((source, importObj) => (
+            
+            fetch(source)
+                .then((response) => {
+
+                    if (response.ok) return response.arrayBuffer();
+
+                    throw new Error(`Unable to fetch wasm ${source}.`);
+
+                })
+                .then(WebAssembly.compile)
+                .then((module) => {
+
+                    const instance = new WebAssembly.Instance(module, importObj);
+                    return instance.exports;
+
+                }))
+
+        ));
+                
+        
+    </script>
+</body>
+
+</html>

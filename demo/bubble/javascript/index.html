@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DEMO - JS</title>
+</head>
+
+<body style="margin:0; overflow: hidden">
+    <canvas id="canvas" style="width: 100vw; height: 100vh; float: right;"></canvas>
+    <h1 style="position: fixed; top: 0; left: 0; width: 100%; text-align: center; margin: 0;">Javascript</h1>
+    <button id="action" style="position: fixed; top: 10px; right: 10px;">RUN</button>
+    <script type="module">
+        import render from '../js/render.js';
+
+        // js
+        (function () {
+
+            const circleCount = 10000;
+            const gridWidth = 70;
+            const gridHeight = 120;
+
+            // position
+            const circleData = new Float32Array(circleCount * 3);
+            // velocity
+            const circlevData = new Float32Array(circleCount * 2);
+
+            function detectCircleCollision (x1, y1, r1, x2, y2, r2) {
+                // 檢查邊框交叉點
+                if (x1 + r1 < x2 - r2 || x1 - r1 > x2 + r2 ||
+                    y1 + r1 < y2 - r2 || y1 - r1 > y2 + r2)
+                    return false;
+                // 圓心距 <半徑和
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) <= r1 + r2;
+            }
+
+            function init (displayWidth, displayHeight) {
+                for (let i = 0, iv = 0; i < circleData.length; i += 3, iv += 2) {
+                    let collision, x, y, r;
+                    // loop 確保圓圈不重疊
+                    do {
+                        collision = false;
+                        x = displayWidth * Math.random();
+                        y = displayHeight * Math.random();
+                        // 大小 0.5 - 128, 指數分布
+                        r = Math.ceil(Math.exp(Math.random() * 8) / 23.2887);
+
+                        // 確保在範圍內
+                        if (displayWidth - (x + r) < 0 || x - r < 0 ||
+                            displayHeight - (y + r) < 0 || y - r < 0) {
+                            collision = true;
+                        }
+                        else {
+                            // 起始不碰撞
+                            for (let j = 0; j < i; j += 3) {
+                                if (detectCircleCollision(x, y, r, circleData[j], circleData[j + 1], circleData[j + 2])) {
+                                    collision = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    while (collision);
+
+                    circleData[i] = x;
+                    circleData[i + 1] = y;
+                    circleData[i + 2] = r;
+
+                    // 速度疊代
+                    circlevData[iv] = (Math.random() - 0.5) * 0.1;
+                    circlevData[iv + 1] = (Math.random() - 0.5) * 0.1;
+                }
+            }
+
+            const grid = [];
+
+            function timeStep (displayWidth, displayHeight) {
+                // 初始化格子
+                for (let p = 0; p < gridWidth; p++) {
+                    const col = grid[p] = [];
+                    for (let q = 0; q < gridHeight; q++) {
+                        col[q] = [];
+                    }
+                }
+
+                for (let i = 0, iv = 0; i < circleData.length; i += 3, iv += 2) {
+                    const xi = circleData[i];
+                    const yi = circleData[i + 1];
+                    const ri = circleData[i + 2];
+
+                    let vxi = circlevData[iv];
+                    let vyi = circlevData[iv + 1];
+
+                    // 重力
+                    vyi += 0.0001;
+
+                    // 邊界處理
+                    if (displayWidth - (xi + ri) < 0 && vxi > 0 || xi - ri < 0 && vxi < 0) {
+                        vxi = -vxi;
+                    }
+                    if (displayHeight - (yi + ri) < 0 && vyi > 0 || yi - ri < 0 && vyi < 0) {
+                        vyi = -vyi;
+                    }
+
+                    circleData[i] = xi + vxi;
+                    circleData[i + 1] = yi + vyi;
+                    circlevData[iv] = vxi;
+                    circlevData[iv + 1] = vyi;
+
+                    // 檢查每個圓圈的格子範圍
+                    let leftCol = Math.floor((xi - ri) / displayWidth * gridWidth);
+                    let rightCol = Math.floor((xi + ri) / displayWidth * gridWidth);
+                    let topRow = Math.floor((yi - ri) / displayHeight * gridHeight);
+                    let bottomRow = Math.floor((yi + ri) / displayHeight * gridHeight);
+
+                    if (leftCol < 0)
+                        leftCol = 0;
+                    if (rightCol >= gridWidth)
+                        rightCol = gridWidth - 1;
+                    if (topRow < 0)
+                        topRow = 0;
+                    if (bottomRow >= gridHeight)
+                        bottomRow = gridHeight - 1;
+
+                    // 分配各個圓到格子
+                    for (let p = leftCol; p <= rightCol; p++) {
+                        const col = grid[p];
+                        for (let q = topRow; q <= bottomRow; q++) {
+                            col[q].push(i);
+                        }
+                    }
+                }
+
+                // 碰撞檢測
+                for (let p = 0; p < gridWidth; p++) {
+                    const col = grid[p];
+                    for (let q = 0; q < gridHeight; q++) {
+                        const cell = col[q];
+
+                        // loop 檢查每個圓
+                        for (let k = 0; k < cell.length; k++) {
+                            const i = cell[k];
+                            const iv = i / 3 * 2;
+
+                            const xi = circleData[i];
+                            const yi = circleData[i + 1];
+                            const ri = circleData[i + 2];
+
+                            let vxi = circlevData[iv];
+                            let vyi = circlevData[iv + 1];
+
+                            // 檢查
+                            for (let l = k + 1; l < cell.length; l++) {
+                                const j = cell[l];
+                                const jv = j / 3 * 2;
+
+                                const xj = circleData[j];
+                                const yj = circleData[j + 1];
+                                const rj = circleData[j + 2];
+
+                                if (detectCircleCollision(xi, yi, ri, xj, yj, rj)) {
+                                    const vxj = circlevData[jv];
+                                    const vyj = circlevData[jv + 1];
+
+                                    // 算碰撞單位 vector
+                                    let collDx = xj - xi;
+                                    let collDy = yj - yi;
+                                    const collLen = Math.sqrt(collDx * collDx + collDy * collDy);
+                                    collDx = collDx / collLen;
+                                    collDy = collDy / collLen;
+
+                                    const cui = collDx * vxi + collDy * vyi;
+                                    const cuj = collDx * vxj + collDy * vyj;
+
+                                    // 遠離 skip
+                                    if (cui - cuj <= 0)
+                                        continue;
+
+                                    // 1D 彈性方程式計算碰撞後的合成速度 (系統內)
+                                    const massSum = ri + rj;
+                                    const massDiff = ri - rj;
+                                    const cvi = (cui * massDiff + 2 * rj * cuj) / massSum;
+                                    const cvj = (2 * ri * cui - cuj * massDiff) / massSum;
+
+                                    // 算速D
+                                    const dcvi = cvi - cui;
+                                    const dcvj = cvj - cuj;
+
+                                    // 碰撞向量使得速度變化
+                                    circlevData[iv] = vxi + collDx * dcvi;
+                                    circlevData[iv + 1] = vyi + collDy * dcvi;
+                                    circlevData[jv] = vxj + collDx * dcvj;
+                                    circlevData[jv + 1] = vyj + collDy * dcvj;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            action.addEventListener('click', () => render(canvas, circleData, circleCount, init, timeStep));
+
+        }());
+                
+        
+    </script>
+</body>
+
+</html>
