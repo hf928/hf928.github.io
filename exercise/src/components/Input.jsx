@@ -1,5 +1,22 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 
-const Input = (props) => <input type="text" {...props} />;
+class Input extends PureComponent {
+
+    render () {
+
+        return (
+
+            <input
+                type="text"
+                value={this.props.value}
+                onChange={this.props.onChange}
+                ref={this.props.inputRef}
+            />
+
+        );
+
+    }
+
+}
 
 export default Input;

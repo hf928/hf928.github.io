@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import wrapper from '../../hoc/wrapper.js';
 
 class Head extends PureComponent {
 
+    alert = () => {
+
+        alert('terry');
+
+    }
+
 
     render () {
-
 
         return (
 
@@ -16,6 +22,7 @@ class Head extends PureComponent {
                 <Input
                     value={this.props.query}
                     onChange={this.props.handleQueryUpdate}
+                    inputRef={this.props.inputRef}
                 />
                 <Button
                     onClick={this.props.handleListUpdate}
@@ -35,5 +42,6 @@ Head.propTypes = {
     handleListUpdate: PropTypes.func.isRequired
 }
 
+const classes = ['header1', 'mainheader888888', 'hello'].join(' ');
 
-export default Head;
+export default wrapper(Head, classes);

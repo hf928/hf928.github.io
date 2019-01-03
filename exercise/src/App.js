@@ -22,6 +22,9 @@ class App extends Component {
 
         };
 
+        this.inputRef = React.createRef();
+        this.headRef = React.createRef();
+
     }
 
     handleQueryUpdate = (e) => {
@@ -43,6 +46,11 @@ class App extends Component {
                 query: ''
             });
 
+            console.log(this.inputRef);
+            console.log(this.headRef);
+
+            this.inputRef.current.focus();
+            this.headRef.current.alert();
         }
 
     }
@@ -54,6 +62,8 @@ class App extends Component {
                     query={this.state.query}
                     handleQueryUpdate={this.handleQueryUpdate}
                     handleListUpdate={this.handleListUpdate}
+                    inputRef={this.inputRef}
+                    ref={this.headRef}
                 />
                 <List
                     data={this.state.list}
