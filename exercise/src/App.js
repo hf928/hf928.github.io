@@ -50,7 +50,7 @@ class App extends Component {
             console.log(this.headRef);
 
             this.inputRef.current.focus();
-            this.headRef.current.alert();
+            // this.headRef.current.alert();
         }
 
     }
