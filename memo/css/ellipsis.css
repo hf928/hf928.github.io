@@ -1,0 +1,12 @@
+
+/* 超過 n 行顯示... (webkit) */
+.block {
+    display: block;
+    display: -webkit-box;
+    /* n 行 */
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+}
