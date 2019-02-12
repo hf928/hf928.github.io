@@ -1,3 +1,8 @@
+.line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 /* 超過 n 行顯示... (webkit) */
 .block {
