@@ -14,11 +14,9 @@ npm i -D jest babel-jest identity-obj-proxy
 
 ```
 module.exports = {
-    jest: {
-        moduleNameMapper: {
-            "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-            "\\.(css|less)$": "identity-obj-proxy"
-        }
+    moduleNameMapper: {
+        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
+        '\\.(css|less)$': 'identity-obj-proxy'
     }
 }
 ```
@@ -118,6 +116,7 @@ class MyComponent extends Component {
 
     }
 
+    // 每按一次就加 1
     handleButtonClicked = () => {
 
         const newValue = this.state.value + 1;
@@ -191,7 +190,7 @@ describe('value increment', () => {
 
         wrapper.update();
 
-        // 取得新的 value
+        // 檢視是否取得新的 value: 10 (99 + 1)
         const newValue = wrapper.find('[data-test="component-MyComponent-value"]').text();
 
         expect(newValue).toBe(startValue + 1);
@@ -209,7 +208,8 @@ describe('value increment', () => {
 ```
 {
     "scripts": {
-        "test": "jest --watch"
+        "test": "jest --watch",
+        "coverage": "jest --coverage"
     }
 }
 ```
