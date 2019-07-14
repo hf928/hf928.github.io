@@ -165,10 +165,17 @@ test('render MyComponent', () => {
 
 describe('value increment', () => {
 
+    let wrapper;
+
+    beforeEach(() => {
+        
+      wrapper = shallow(<MyComponent/>);
+
+    });
+
     // 測試初始 value 是否正確
     test('value starts at 0', () => {
 
-        const wrapper = shallow(<MyComponent/>);
         const initValue = wrapper.state('value');
 
         expect(initValue).toBe(0);
@@ -180,8 +187,7 @@ describe('value increment', () => {
 
         // 從 99 開始
         const startValue = 99;
-        const wrapper = shallow(<MyComponent/>);
-
+        
         wrapper.state({ value: startValue });
 
         // 找到按鈕並 click
