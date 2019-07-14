@@ -1,0 +1,27 @@
+$blue: blue;
+
+.wrapper {
+    background-color: $blue;
+}
+
+.brightness {
+    animation: brightness 5s ease both infinite;
+}
+
+@keyframes brightness {
+    0% { 
+      filter:brightness(100%);
+    }
+    46% { 
+      filter:brightness(100%);
+    }
+    48% {
+      filter:brightness(160%);
+    }
+    50% { 
+      filter:brightness(100%);
+    }
+    100% { 
+      filter:brightness(100%);
+    }
+  }
