@@ -1,0 +1,19 @@
+
+{
+    "name": "HFHFHF123456",
+    "short_name": "HF123",
+    "prefer_related_applications": true,
+    "related_applications": [
+      {
+        "platform": "play",
+        "id": "com.nianticlabs.pokemongo"
+      }
+    ],
+    "icons": [
+      {
+        "src": "launcher.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      }
+    ]
+  }
