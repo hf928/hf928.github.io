@@ -48,16 +48,24 @@
         <div class='onesignal-customlink-container'></div>
     </aside>
     <script>
-        if (Notification && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        document.onload = () => {
 
-            document.getElementById('subscribe').classList.add('slideDown');
+            setTimeout(() => {
 
-            document.getElementById('subscribe-close').addEventListener('click', () => {
+                if (Notification && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
 
-                document.getElementById('subscribe').classList.remove('slideDown');
+                    document.getElementById('subscribe').classList.add('slideDown');
 
-            });
+                    document.getElementById('subscribe-close').addEventListener('click', () => {
 
+                        document.getElementById('subscribe').classList.remove('slideDown');
+
+                    });
+
+                }
+
+            }, 5000);
+           
         }
     </script>
 </body>
