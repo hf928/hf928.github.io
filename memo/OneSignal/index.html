@@ -70,6 +70,7 @@
 
                                         });
 
+        // hide modal after subscription state is 'isPushEnabled'
         const updateMangeWebPushSubscriptionModal = () => getSubscriptionState()
                                                             .then(function(state) {
 
@@ -81,6 +82,24 @@
 
                                                             });
 
+        // show modal after subscription state checked 
+        const mangeWebPushSubscriptionModal = () => setTimeout(() => {
+
+            getSubscriptionState()
+                .then(function(state) {
+
+                    if (!state.isPushEnabled && !state.isOptedOut) {
+
+                        showModal();
+
+                        document.getElementById('subscribe-close').addEventListener('click', closeModal);
+
+                    }
+
+                });
+
+        }, 5000)
+
         OneSignal.push(function () {
 
             // If we're on an unsupported browser, do nothing
@@ -90,7 +109,7 @@
 
             }
 
-            updateMangeWebPushSubscriptionModal();
+            mangeWebPushSubscriptionModal();
 
             OneSignal.on('subscriptionChange', function (isSubscribed) {
 
@@ -101,26 +120,6 @@
 
         });
 
-        window.onload = () => {
-
-            setTimeout(() => {
-
-                getSubscriptionState()
-                    .then(function(state) {
-
-                        if (!state.isPushEnabled && !state.isOptedOut) {
-
-                            showModal();
-
-                            document.getElementById('subscribe-close').addEventListener('click', closeModal);
-
-                        }
-
-                    });
-
-            }, 5000);
-           
-        }
     </script>
 </body>
 </html>
