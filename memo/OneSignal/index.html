@@ -12,6 +12,9 @@
         OneSignal.init({
             appId: '11b5d573-b974-454f-888e-994ec6e0dec4',
         });
+        OneSignal.on('notificationDisplay', function (event) {
+            console.log('Notifiation Displayed');
+        });
     });
     </script>
 </head>
