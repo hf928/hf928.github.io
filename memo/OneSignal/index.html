@@ -43,26 +43,80 @@
     </style>
 </head>
 <body>
-    <aside id="subscribe" class="subscribe-wrapper">
+    <aside id="subscribe-modal" class="subscribe-wrapper">
         <i id="subscribe-close" class="subscribe-close-btn">×</i>
-        <div class='onesignal-customlink-container'></div>
+        <div id="subscribe" class='onesignal-customlink-container'></div>
     </aside>
     <script>
-        document.onload = () => {
+
+        const modalEle = document.getElementById('subscribe-modal');
+
+        const showModal = () => modalEle.classList.add('slideDown');
+        const closeModal = () => modalEle.classList.remove('slideDown');
+
+
+        const getSubscriptionState = () => Promise.all([
+                                            OneSignal.isPushNotificationsEnabled(),
+                                            OneSignal.isOptedOut()
+                                        ]).then(function (result) {
+
+                                            const isPushEnabled = result[0];
+                                            const isOptedOut = result[1];
+
+                                            return {
+                                                isPushEnabled: isPushEnabled,
+                                                isOptedOut: isOptedOut
+                                            };
+
+                                        });
+
+        const updateMangeWebPushSubscriptionModal = () => getSubscriptionState()
+                                                            .then(function(state) {
+
+                                                                if (state.isPushEnabled) {
+
+                                                                    closeModal();
+
+                                                                }
+
+                                                            });
+
+        OneSignal.push(function () {
+
+            // If we're on an unsupported browser, do nothing
+            if (!OneSignal.isPushNotificationsSupported()) {
+
+                return;
+
+            }
+
+            updateMangeWebPushSubscriptionModal();
+
+            OneSignal.on('subscriptionChange', function (isSubscribed) {
+
+                /* If the user's subscription state changes during the page's session, update the button text */
+                updateMangeWebPushSubscriptionModal();
+
+            });
+
+        });
+
+        window.onload = () => {
 
             setTimeout(() => {
 
-                if (Notification && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                getSubscriptionState()
+                    .then(function(state) {
 
-                    document.getElementById('subscribe').classList.add('slideDown');
+                        if (!state.isPushEnabled && !state.isOptedOut) {
 
-                    document.getElementById('subscribe-close').addEventListener('click', () => {
+                            showModal();
 
-                        document.getElementById('subscribe').classList.remove('slideDown');
+                            document.getElementById('subscribe-close').addEventListener('click', closeModal);
+
+                        }
 
                     });
-
-                }
 
             }, 5000);
            
