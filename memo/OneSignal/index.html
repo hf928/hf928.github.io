@@ -17,8 +17,48 @@
         });
     });
     </script>
+    <style>
+        .subscribe-wrapper {
+            min-width: 300px;
+            position: fixed;
+            left: 50vw;
+            transform: translate(-50%, -150%);
+            transition: transform .8s linear;
+            padding: 2.5em 1.2em;
+            text-align: center;
+            border: 1px solid #c3c3c3;
+        }
+        .subscribe-close-btn {
+            position: absolute;
+            top: 0;
+            right: .2em;
+            font-size: 1.5em;
+            line-height: 1em;
+            cursor: pointer;
+            padding: .2em;
+        }
+        .slideDown {
+            transform: translate(-50%, 0);
+        }
+    </style>
 </head>
 <body>
-    <div class='onesignal-customlink-container'></div>
+    <aside id="subscribe" class="subscribe-wrapper">
+        <i id="subscribe-close" class="subscribe-close-btn">×</i>
+        <div class='onesignal-customlink-container'></div>
+    </aside>
+    <script>
+        if (Notification && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+
+            document.getElementById('subscribe').classList.add('slideDown');
+
+            document.getElementById('subscribe-close').addEventListener('click', () => {
+
+                document.getElementById('subscribe').classList.remove('slideDown');
+
+            });
+
+        }
+    </script>
 </body>
 </html>
