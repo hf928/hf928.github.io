@@ -1,0 +1,82 @@
+{
+    "extends": [
+        "airbnb-base",
+        "plugin:react/recommended"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "allowImportExportEverywhere": true,
+        "codeFrame": true,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "plugins": ["react"],
+    "env": {
+        "browser": true,
+        "jquery": true,
+        "es6": true,
+        "node": true
+    },
+    "settings": {
+        "react": {
+          "createClass": "createReactClass",
+          "pragma": "React",
+          "version": "16.4.2",
+          "flowVersion": "0.53"
+        }
+    },
+    "rules": {
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/display-name": 0,
+        "react/jsx-no-target-blank": 0,
+
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "padded-blocks": ["error", "always"],
+        "no-shadow": ["error", {
+            "hoist": "functions"
+        }],
+        "quotes": ["error", "single", { "avoidEscape": true, "allowTemplateLiterals": true }],
+        "quote-props": ["error", "consistent-as-needed"],
+        "one-var": 0,
+        "func-names": ["error", "never"],
+        "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
+        "no-trailing-spaces": ["error", { "skipBlankLines": true, "ignoreComments": true }],
+        "no-restricted-syntax": ["error", "WithStatement"],
+        "no-case-declarations": 0,
+        "no-multi-assign": 0,
+        "prefer-destructuring": 0,
+        "no-param-reassign": 0,
+        "no-nested-ternary": 0,
+        "no-script-url": 0,
+        "prefer-arrow-callback": ["error", { "allowUnboundThis": false }],
+        "array-callback-return": 0,
+        "global-require": 0,
+        "no-plusplus": 0,
+        "class-methods-use-this": 0,
+        "radix": 0,
+        "no-inner-declarations": ["error", "both"],
+        "space-before-function-paren": ["error", {
+            "anonymous": "always",
+            "named": "always",
+            "asyncArrow": "always"
+        }],
+        "prefer-const": ["error", { "destructuring": "all", "ignoreReadBeforeAssign": false }],
+        "comma-dangle": ["error", { "functions": "never", "arrays": "only-multiline", "objects": "only-multiline" }],
+        "consistent-return": 0,
+        "max-len": 0,
+        "linebreak-style": ["error", "unix"],
+        "function-paren-newline": 0,
+        "no-extra-boolean-cast": 0,
+        "arrow-parens": ["error", "always"],
+        "no-return-assign" : 0,
+        "no-unused-expressions": 0,
+        
+        "import/no-unresolved": 0,
+        "import/no-extraneous-dependencies": 0,
+        "import/extensions": [".js", ".jsx"]
+
+    }
+}

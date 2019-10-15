@@ -1,0 +1,19 @@
+{
+    "name": "123",
+    "short_name": "123",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "start_url": "https://www.google.com.tw",
+    "prefer_related_applications": true,
+    "related_applications": [
+        {
+            "platform": "play",
+            "url": "https://play.google.com/store/apps/details?id=123",
+            "id": "com.taogo.tw"
+        },
+        {
+            "platform": "itunes",
+            "url": "https://apps.apple.com/app/apple-store/id123"
+        }
+    ]
+}
