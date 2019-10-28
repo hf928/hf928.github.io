@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
+import Input from '../Input';
+import Button from '../Button';
 import wrapper from '../../hoc/wrapper.js';
 
 class Head extends PureComponent {
@@ -18,7 +18,7 @@ class Head extends PureComponent {
 
         return (
 
-            <>
+            <div style={{ backgroundColor: '#888' }}>
                 <Input
                     value={this.props.query}
                     onChange={this.props.handleQueryUpdate}
@@ -27,7 +27,7 @@ class Head extends PureComponent {
                 <Button
                     onClick={this.props.handleListUpdate}
                 />
-            </>
+            </div>
 
         );
 

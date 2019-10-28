@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Li from '../../components/Li';
+import Li from '../Li';
 
 const lis = (data) => data.map((text, idx) => (
     <Li key={`${text}${idx}`} >{text}</Li>

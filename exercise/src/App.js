@@ -1,76 +1,77 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 
-import Head from './containers/head/Head';
-import List from './containers/list/List';
+import Head from './components/head/Head';
+import List from './components/list/List';
 
-class App extends Component {
+const App = (props) => {
 
-    constructor (props) {
+    // const [appState, setAppState] = useState({
 
-        super(props);
+    //     query: '8889999',
+    //     list: [
+    //         'Sophia',
+    //         'Terry',
+    //         'Betty',
+    //         'Jason',
+    //         'Odin',
+    //     ]
 
-        this.state = {
+    // });
 
-            query: '888',
-            list: [
-                'Sophia',
-                'Terry',
-                'Betty',
-                'Jason',
-            ]
+    const [query, setQuery] = useState('8889999');
+    const [list, setList] = useState([
+        'Sophia',
+        'Terry',
+        'Betty',
+        'Jason',
+        'Odin',
+    ]);
 
-        };
 
-        this.inputRef = React.createRef();
-        this.headRef = React.createRef();
+    const inputRef = useRef(null);
+    const headRef = useRef(null);
+
+    const handleQueryUpdate = (e) => {
+
+        setQuery(e.target.value);
 
     }
 
-    handleQueryUpdate = (e) => {
+    const handleListUpdate = () => {
 
-        this.setState({
-            query: e.target.value
-        });
+        if (query !== '') {
 
-    }
+            const newList = [...list, query];
 
-    handleListUpdate = () => {
+            setList(newList);
+            setQuery('');
 
-        if (this.state.query !== '') {
+            console.log(inputRef);
+            console.log(headRef);
 
-            const list = [...this.state.list, this.state.query];
-
-            this.setState({
-                list,
-                query: ''
-            });
-
-            console.log(this.inputRef);
-            console.log(this.headRef);
-
-            this.inputRef.current.focus();
-            // this.headRef.current.alert();
+            inputRef.current.focus();
+            // headRef.current.alert();
         }
 
     }
 
-    render () {
-        return (
-            <div className="App">
-                <Head
-                    query={this.state.query}
-                    handleQueryUpdate={this.handleQueryUpdate}
-                    handleListUpdate={this.handleListUpdate}
-                    inputRef={this.inputRef}
-                    ref={this.headRef}
-                />
-                <List
-                    data={this.state.list}
-                />
-            </div>
-        );
-    }
+
+    return (
+        <div className="App">
+            <Head
+                query={query}
+                handleQueryUpdate={handleQueryUpdate}
+                handleListUpdate={handleListUpdate}
+                inputRef={inputRef}
+                ref={headRef}
+            />
+            <List
+                data={list}
+            />
+        </div>
+    );
+    
 
 }
 
