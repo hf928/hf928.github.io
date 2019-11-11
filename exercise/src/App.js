@@ -1,10 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import './App.css';
 
-import Head from './components/head/Head';
+import Add from './components/head/Add';
+import Search from './components/head/Search';
+
 import List from './components/list/List';
 
 const App = (props) => {
+
+    const inputRef = useRef();
+    const AddRef = useRef();
 
     // const [appState, setAppState] = useState({
 
@@ -20,52 +25,83 @@ const App = (props) => {
     // });
 
     const [query, setQuery] = useState('8889999');
-    const [list, setList] = useState([
-        'Sophia',
-        'Terry',
-        'Betty',
-        'Jason',
-        'Odin',
-    ]);
+    // const [list, setList] = useState([
+    //     'Sophia',
+    //     'Terry',
+    //     'Betty',
+    //     'Jason',
+    //     'Odin',
+    // ]);
 
 
-    const inputRef = useRef(null);
-    const headRef = useRef(null);
+    const [list, setList] = useState([]);
 
-    const handleQueryUpdate = (e) => {
+    // 等同於 componentDidMount
+    // useEffect(() => {
+
+    //     async function getMembers () {
+
+    //         const res = await axios.get('http://localhost:8080/api/members');
+
+    //         const resList = res.data;
+
+    //         setList(resList);
+
+    //     } 
+
+    //     getMembers();
+
+    // }, []);
+    
+
+    const setListWithLog = useCallback((newList) => {
+
+        console.log(newList);
+        
+        setList(newList);
+
+    }, []);
+
+
+    const handleQueryUpdate = useCallback((e) => {
 
         setQuery(e.target.value);
 
-    }
+    }, []);
 
+    
     const handleListUpdate = () => {
 
         if (query !== '') {
 
             const newList = [...list, query];
 
-            setList(newList);
+            setListWithLog(newList);
             setQuery('');
 
             console.log(inputRef);
-            console.log(headRef);
+            console.log(AddRef);
 
             inputRef.current.focus();
-            // headRef.current.alert();
+            // AddRef.current.alert();
         }
 
     }
 
-
     return (
         <div className="App">
-            <Head
+            <Add
                 query={query}
                 handleQueryUpdate={handleQueryUpdate}
                 handleListUpdate={handleListUpdate}
                 inputRef={inputRef}
-                ref={headRef}
+                ref={AddRef}
             />
+            <hr/>
+            <Search
+                setList={setListWithLog}
+            />
+            <hr/>
             <List
                 data={list}
             />

@@ -21,11 +21,11 @@ app.get('/api/members', (req, res) => {
 
 app.get('/api/members/:name', (req, res) => {
 
-    res.send(members.filter((member) => member === req.params.name));
+    res.send(members.filter((member) => member.toLowerCase()=== req.params.name.toLowerCase()));
 
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 8080, () => {
 
     console.log('Now listening...');
     
