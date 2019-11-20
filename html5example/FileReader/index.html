@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FileReader API</title>
+</head>
+<body>
+    <form>
+        <input type="file" id="file" />
+        <img id="img" />
+    </form>
+    <script>
+
+        const fileInput = document.querySelector('#file');
+        const fileImg = document.querySelector('#img');
+
+        function handleFileChange (event) {
+
+            const fileList = event.target.files;
+
+            [].forEach.call(fileList, (file) => {
+
+                // 使用 FileReader API
+                const reader = new FileReader();
+
+                // onload 後將取得的圖片 base64 指定為 img 元素的 src 以呈現
+                reader.onload = (loadedEvent) => fileImg.setAttribute('src', loadedEvent.target.result);
+
+                // 讀取檔案 blob
+                reader.readAsDataURL(file);
+
+            });
+
+        }
+
+        fileInput.addEventListener('change', handleFileChange);
+    </script>
+</body>
+</html>
