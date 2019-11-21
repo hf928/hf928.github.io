@@ -5,13 +5,13 @@ import axios from 'axios';
 import Input from '../Input';
 
 // fetch '/api/members'
-async function getMembers (name = '', callback) {
+async function getMembers (name = '') {
 
     const res = await axios.get('http://localhost:8080/api/members/' + name);
 
     const resList = res.data;
 
-    callback(resList);
+    return resList;
 
 };
 
@@ -25,9 +25,15 @@ const Search = (props) => {
     // 等同於 componentDidMount + componentDidUpdate
     useEffect(() => {
 
-        const timer = setTimeout(() => {
+        const timer = setTimeout(async () => {
             
-            if (searchQuery === searchInputRef.current.value) getMembers(searchQuery, setList);
+            if (searchQuery === searchInputRef.current.value) {
+
+                const memberList = await getMembers(searchQuery);
+
+                setList(memberList);
+
+            }
 
         }, 500);
 

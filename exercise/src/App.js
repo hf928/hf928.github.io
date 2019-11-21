@@ -63,9 +63,9 @@ const App = (props) => {
     }, []);
 
 
-    const handleQueryUpdate = useCallback((e) => {
+    const handleQueryUpdate = useCallback((newQuery) => {
 
-        setQuery(e.target.value);
+        setQuery(newQuery);
 
     }, []);
 
@@ -76,7 +76,7 @@ const App = (props) => {
 
             const newList = [...list, query];
 
-            setListWithLog(newList);
+            setList(newList);
             setQuery('');
 
             console.log(inputRef);

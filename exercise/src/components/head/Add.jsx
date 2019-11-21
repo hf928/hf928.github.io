@@ -21,7 +21,7 @@ class Head extends PureComponent {
             <div style={{ backgroundColor: '#888' }}>
                 <Input
                     value={this.props.query}
-                    onChange={this.props.handleQueryUpdate}
+                    onChange={(e) => this.props.handleQueryUpdate(e.target.value)}
                     inputRef={this.props.inputRef}
                 />
                 <Button
