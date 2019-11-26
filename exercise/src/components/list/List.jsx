@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Li from '../Li';
 
 const lis = (data) => data.map((text, idx) => (
@@ -6,58 +6,16 @@ const lis = (data) => data.map((text, idx) => (
 ));
 
 
-class List extends PureComponent {
+const List = (props) => {
 
-    constructor (props) {
-
-        super(props);
-
-        console.log('[List] constructor');
-        
-    }
-
-    componentWillMount () {
-
-        console.log('[List] componentWillMount');
-        
-    }
-
-    componentDidMount () {
-
-        console.log('[List] componentDidMount');
-        
-    }
-
-    componentWillUpdate (nextProps, nextState) {
-
-        console.log('[List] componentWillUpdate');
-        
-    }
-
-    componentDidUpdate (prevProps, prevState) {
-
-        console.log('[List] componentDidUpdate');
-        
-    }
+    console.log('[LIST] render');
     
-    render () {
-        
-        console.log('[List] render');
-
-        // const lis = this.props.data.map((text, idx) => <li key={`${text}${idx}`}>{text}</li>);
-
-        return (
-
-            <ul>
-                {lis(this.props.data)}
-            </ul>
-
-        );
-
-    }
-
+    return (
+        <ul>
+            {lis(props.data)}
+        </ul>
+    );
 
 }
-
 
 export default List;

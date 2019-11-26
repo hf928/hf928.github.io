@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useReducer, useMemo } from 'react';
 import './App.css';
 
 import Add from './components/head/Add';
@@ -6,10 +6,50 @@ import Search from './components/head/Search';
 
 import List from './components/list/List';
 
+const initState = {
+    list: [],
+    query: ''
+};
+
+const stateReducer = (state, action) => {
+
+    const newState = { ...state };
+
+    switch (action.type) {
+
+        case 'UPDATE_QUERY':
+
+            newState.query = action.query;
+
+            break;
+
+        case 'UPDATE_LIST_BY_QUERY':
+
+            newState.list = [...newState.list, newState.query];
+            newState.query = '';
+
+            break;
+
+        case 'UPDATE_LIST':
+
+            newState.list = action.list;
+
+            break;
+
+        default:
+            
+            throw new Error('Something went wrong.');
+
+    }
+
+    return newState;
+
+};
+
 const App = (props) => {
 
     const inputRef = useRef();
-    const AddRef = useRef();
+    // const AddRef = useRef();
 
     // const [appState, setAppState] = useState({
 
@@ -24,7 +64,9 @@ const App = (props) => {
 
     // });
 
-    const [query, setQuery] = useState('8889999');
+    const [state, dispatch] = useReducer(stateReducer, initState);
+
+    // const [query, setQuery] = useState('8889999');
     // const [list, setList] = useState([
     //     'Sophia',
     //     'Terry',
@@ -34,7 +76,7 @@ const App = (props) => {
     // ]);
 
 
-    const [list, setList] = useState([]);
+    // const [list, setList] = useState([]);
 
     // 等同於 componentDidMount
     // useEffect(() => {
@@ -58,44 +100,51 @@ const App = (props) => {
 
         console.log(newList);
         
-        setList(newList);
+        // setList(newList);
+        
+        dispatch({ type: 'UPDATE_LIST', list: newList });
 
     }, []);
 
 
     const handleQueryUpdate = useCallback((newQuery) => {
 
-        setQuery(newQuery);
+        // setQuery(newQuery);
+        dispatch({ type: 'UPDATE_QUERY', query: newQuery });
 
     }, []);
 
     
-    const handleListUpdate = () => {
+    const handleListUpdate = useCallback(() => {
 
-        if (query !== '') {
+        if (state.query !== '') {
 
-            const newList = [...list, query];
+            // const newList = [...list, state.query];
 
-            setList(newList);
-            setQuery('');
+            // setList(newList);
+            // setQuery('');
+            
+            dispatch({ type: 'UPDATE_LIST_BY_QUERY' });
 
             console.log(inputRef);
-            console.log(AddRef);
+            // console.log(AddRef);
 
             inputRef.current.focus();
             // AddRef.current.alert();
+
         }
 
-    }
+    }, [inputRef, state.query]);
+
 
     return (
         <div className="App">
             <Add
-                query={query}
+                query={state.query}
                 handleQueryUpdate={handleQueryUpdate}
                 handleListUpdate={handleListUpdate}
                 inputRef={inputRef}
-                ref={AddRef}
+                // ref={AddRef}
             />
             <hr/>
             <Search
@@ -103,7 +152,7 @@ const App = (props) => {
             />
             <hr/>
             <List
-                data={list}
+                data={state.list}
             />
         </div>
     );
