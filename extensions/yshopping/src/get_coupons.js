@@ -76,7 +76,7 @@ async function loadNewCoupons () {
                 window.scroll(0, 99999);
                 seekNewCoupons();
 
-                if (i === max) window.location.reload();
+                if (i === scrollingTimes) window.location.reload();
                 else resolve();
             
             }, scrollingDelay);
