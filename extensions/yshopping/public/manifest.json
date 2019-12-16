@@ -8,7 +8,7 @@
     "content_scripts": [
         {
             "all_frames": true,
-            "matches": ["https://tw.buy.yahoo.com/coupons"],
+            "matches": ["https://tw.buy.yahoo.com/coupons*"],
             "js": ["get_coupons.js"],
             "run_at": "document_end"
         }
