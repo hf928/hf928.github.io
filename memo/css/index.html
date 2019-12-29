@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./ellipsis.css">
+    <link rel="stylesheet" href="./clip-path.css">
+    <style>
+        .ellipsis-block {
+            max-width: 350px;
+        }
+        .clip-block {
+            height: 100px;
+            max-width: 300px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <section id="ellipsis">
+        <h5>ellipsis - line</h5>
+        <blockquote>
+            <p class="ellipsis-line ellipsis-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</p>
+        </blockquote>
+        <h5>ellipsis - block</h5>
+        <blockquote>
+            <p class="ellipsis-mutli ellipsis-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</p>
+        </blockquote>
+    </section>
+    <section id="clip-path">
+        <h5>clip-path - polygon</h5>
+        <div class="clip-path-polygon clip-block"></div>
+        <h5>clip-path - circle (45%)</h5>
+        <div class="clip-path-circle-45 clip-block"></div>
+        <h5>clip-path - circle (20%)</h5>
+        <div class="clip-path-circle-20 clip-block"></div>
+        <h5>clip-path - ellipse (20%, 40%)</h5>
+        <div class="clip-path-ellipse-20-40 clip-block"></div>
+    </section>
+</body>
+</html>

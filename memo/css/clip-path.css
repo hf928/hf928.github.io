@@ -1,0 +1,14 @@
+/* ie10, edge 只能用 url */
+
+.clip-path-polygon {
+    clip-path: polygon(20% 0, 80% 10%, 100% 60%, 0% 100%);
+}
+.clip-path-circle-45 {
+    clip-path: circle(45%);
+}
+.clip-path-circle-20 {
+    clip-path: circle(20%);
+}
+.clip-path-ellipse-20-40 {
+    clip-path: ellipse(20% 40%);
+}
