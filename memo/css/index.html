@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="./ellipsis.css">
     <link rel="stylesheet" href="./clip-path.css">
+    <link rel="stylesheet" href="./background-clip.css">
     <style>
         .ellipsis-block {
             max-width: 350px;
@@ -16,28 +17,43 @@
             max-width: 300px;
             background-color: aqua;
         }
+        .bgClip-block {
+            background-image: linear-gradient(to right, rgb(38, 150, 57), rgb(180, 35, 149));
+            padding: 1em;
+            border: 1em solid transparent;
+        }
     </style>
 </head>
 <body>
     <section id="ellipsis">
         <h5>ellipsis - line</h5>
         <blockquote>
-            <p class="ellipsis-line ellipsis-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</p>
+            <p class="ellipsis--line ellipsis-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</p>
         </blockquote>
         <h5>ellipsis - block</h5>
         <blockquote>
-            <p class="ellipsis-mutli ellipsis-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</p>
+            <p class="ellipsis--mutli ellipsis-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</p>
         </blockquote>
     </section>
     <section id="clip-path">
         <h5>clip-path - polygon</h5>
-        <div class="clip-path-polygon clip-block"></div>
+        <div class="clip-path--polygon clip-block"></div>
         <h5>clip-path - circle (45%)</h5>
-        <div class="clip-path-circle-45 clip-block"></div>
+        <div class="clip-path--circle-45 clip-block"></div>
         <h5>clip-path - circle (20%)</h5>
-        <div class="clip-path-circle-20 clip-block"></div>
+        <div class="clip-path--circle-20 clip-block"></div>
         <h5>clip-path - ellipse (20%, 40%)</h5>
-        <div class="clip-path-ellipse-20-40 clip-block"></div>
+        <div class="clip-path--ellipse-20-40 clip-block"></div>
+    </section>
+    <section id="background-clip">
+        <h5>background-clip - border-box</h5>
+        <div class="background-clip--border-box bgClip-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</div>
+        <h5>background-clip - padding-box</h5>
+        <div class="background-clip--padding-box bgClip-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</div>
+        <h5>background-clip - content-box</h5>
+        <div class="background-clip--content-box bgClip-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</div>
+        <h5>background-clip - text</h5>
+        <div class="background-clip--text bgClip-block">But love is blind, and lovers cannot see the pretty follies that themselves commit, for if they could Cupid himself would blush to see me thus transformèd to a boy.</div>
     </section>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54516992-1"></script>

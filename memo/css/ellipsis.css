@@ -1,11 +1,11 @@
-.ellipsis-line {
+.ellipsis--line {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 /* 超過 n 行顯示... (webkit) */
-.ellipsis-mutli {
+.ellipsis--mutli {
     display: block;
     display: -webkit-box;
     /* -webkit-line-clamp: n 行 */

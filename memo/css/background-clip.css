@@ -1,0 +1,15 @@
+.background-clip--border-box {
+    background-clip: border-box;
+}
+.background-clip--padding-box {
+    background-clip: padding-box;
+}
+.background-clip--content-box {
+    background-clip: content-box;
+}
+/* https://drafts.csswg.org/css-backgrounds-4/#background-clip */
+.background-clip--text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
