@@ -5,7 +5,7 @@ module.exports = (bot) => {
 
     let timer;
     const delay = 60 * 1000;
-    const twicePushDelay = 10 * delay;
+    const nextPushDelay = 10 * delay;
 
     const checkJapanExRate = () => {
 
@@ -21,8 +21,9 @@ module.exports = (bot) => {
                 let curDelay = delay;
 
                 const querySelector = cheerio.load(body);
-                const target = querySelector('.rate-content-sight.text-right.print_hide');
-                const jpyExRate = target[15].children[0].data;
+                // 日本現金賣出匯率 element
+                const target = querySelector('.rate-content-cash.text-right.print_hide')[15];
+                const jpyExRate = +target.children[0].data;
                 
                 const utcHour = new Date().getHours();
 
@@ -33,7 +34,7 @@ module.exports = (bot) => {
 
                     bot.broadcast(`現在日幣匯率 ${jpyExRate}`);
 
-                    curDelay += twicePushDelay;
+                    curDelay += nextPushDelay;
 
                 }
 
