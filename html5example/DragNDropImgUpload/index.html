@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .area {
+            border: 3px dashed #d7d7d7;
+            min-height: 40vh;
+            margin-bottom: 2em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 1.2em;
+        }
+        .area.area--drag-hover {
+            border-style: solid;
+            background-color: bisque;
+        }
+        .area img {
+            width: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div id="imgPrevBox" class="area"></div>
+    <div id="fileContainer" class="area">
+        drog images here!
+    </div>
+    <button id="export">get files</button>
+    <script>
+        (function () {
+
+            const imgStorage = new Map();
+
+            {
+                
+                const imgBoxEle = document.querySelector('#imgPrevBox');
+                const fileContainerEle = document.querySelector('#fileContainer');
+                
+                // 建立檔案 ID
+                function genID (fileObj) {
+
+                    return `${fileObj.name}_${fileObj.lastModified}_${fileObj.size}`;
+
+                }
+
+                // Drag hover 事件處理
+                // 1. 阻止瀏覽器事件
+                // 2. 樣式提示
+                function handleFileDragHover (e) {
+
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    e.target.classList[e.type === 'dragover' ? 'add' : 'remove']('area--drag-hover');
+
+                }
+
+                // 暫存至 Map 中
+                function getArrayBuffer (fileObj) {
+
+                    // 使用 FileReader API
+                    const reader = new FileReader();
+
+                    reader.onload = (loadedEvent) => {
+                        
+                        const result = new Uint8Array(reader.result);
+
+                        imgStorage.set(genID(fileObj), result);
+
+                    };
+
+                    // 讀取檔案 blob
+                    reader.readAsArrayBuffer(fileObj);
+
+                }
+
+                // 產生預覽用的 img 元素
+                function genPreviewImage (fileObj) {
+
+                    // 將取得的圖片 base64 指定為 img 元素的 src 以呈現
+                    const imageBase64 = URL.createObjectURL(fileObj);
+
+                    const imgEle = document.createElement('img');
+                    imgEle.src = imageBase64;
+                    imgEle.dataset.id = genID(fileObj);
+
+                    return imgEle;
+
+                }
+
+                // 處理檔案 Drog 事件
+                // 1. 阻止瀏覽器事件
+                // 2. 暫存各個圖片檔案
+                // 3. 預覽各張圖片
+                function handleFileDrogDown (e) {
+
+                    handleFileDragHover(e);
+
+                    const fileList = e.dataTransfer.files;
+
+                    const frag = document.createDocumentFragment();
+
+                    [].forEach.call(fileList, (file) => {
+
+                        getArrayBuffer(file);
+
+                        const imgEle = genPreviewImage(file);
+
+                        frag.append(imgEle);
+
+                    });
+
+                    imgBoxEle.append(frag);
+
+                }
+
+                // 事件註冊
+                fileContainerEle.addEventListener('dragover', handleFileDragHover);
+                fileContainerEle.addEventListener('dragleave', handleFileDragHover);
+                fileContainerEle.addEventListener('drop', handleFileDrogDown);
+
+            }
+
+            // 輸出圖片資料
+            {
+                
+                const exportEle = document.querySelector('#export');
+
+                function handleFileDataExport () {
+
+                    Array.from(imgStorage).forEach((imgObj) => console.log(imgObj));
+
+                    alert('UPLOAD IMAGES!!!');
+
+                }
+
+                // 事件註冊
+                exportEle.addEventListener('click', handleFileDataExport);
+
+            }
+
+        }());
+    </script>
+</body>
+</html>
