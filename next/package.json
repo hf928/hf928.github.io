@@ -17,7 +17,7 @@
     "@zeit/next-sass": "^1.0.1",
     "autoprefixer": "^9.6.5",
     "axios": "^0.21.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "next": "9.3.2",
     "next-images": "^1.2.0",
     "next-redux-saga": "^4.0.2",
